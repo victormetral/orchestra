@@ -1,0 +1,11 @@
+   services:                               # services : les conteneurs du projet
+     uptime-kuma:                          # nom du service (et nom DNS sur le réseau Docker)
+       image: louislam/uptime-kuma:2       # image officielle, version majeure 2 (épinglée, jamais « latest »)
+       restart: unless-stopped             # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
+       ports:
+         - "127.0.0.1:3001:3001"           # Mac:conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
+       volumes:
+         - uptime-kuma-data:/app/data      # volume (stockage persistant) : les données survivent à la recréation
+
+   volumes:
+     uptime-kuma-data:                     # déclaration du volume nommé
