@@ -1,11 +1,24 @@
-   services:                               # services : les conteneurs du projet
-     uptime-kuma:                          # nom du service (et nom DNS sur le réseau Docker)
-       image: louislam/uptime-kuma:2       # image officielle, version majeure 2 (épinglée, jamais « latest »)
-       restart: unless-stopped             # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
-       ports:
-         - "127.0.0.1:3001:3001"           # Mac:conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
-       volumes:
-         - uptime-kuma-data:/app/data      # volume (stockage persistant) : les données survivent à la recréation
+services:                                          # services : les conteneurs du projet
+  uptime-kuma:                                     # nom du service (et nom DNS sur le réseau Docker)
+    image: louislam/uptime-kuma:2                  # image officielle, version majeure 2 (épinglée, jamais « latest »)
+    restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
+    volumes:
+      - uptime-kuma-data:/app/data                 # volume (stockage persistant) : les données survivent à la recréation
+    # plus de « ports » : Uptime Kuma n'est joignable que via Caddy, sur le réseau Docker privé
 
-   volumes:
-     uptime-kuma-data:                     # déclaration du volume nommé
+  caddy:                                           # caddy : le reverse proxy (serveur d'entrée unique, le « portier »)
+    image: caddy:2                                 # image officielle de Caddy, version majeure 2 (épinglée)
+    restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf arrêt manuel
+    ports:
+      - "127.0.0.1:8080:80"                        # IP:port_Mac:port_conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
+    volumes:
+      - ./proxy/Caddyfile:/etc/caddy/Caddyfile:ro  # bind mount (montage d'un fichier du Mac) ; ro = read-only (lecture seule)
+      - caddy-data:/data                           # data (données) : certificats HTTPS et état de Caddy
+      - caddy-config:/config                       # config : configuration générée par Caddy
+    depends_on:                                    # depends_on (dépend de) : l'ordre de démarrage
+      - uptime-kuma                                # démarre Uptime Kuma avant Caddy
+
+volumes:                                           # volumes : déclaration des volumes nommés (UNE seule clé à la racine)
+  uptime-kuma-data:                                # données d'Uptime Kuma (base SQLite)
+  caddy-data:                                      # données de Caddy
+  caddy-config:                                    # configuration de Caddy 
