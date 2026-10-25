@@ -4,21 +4,18 @@ services:                                          # services : les conteneurs d
     restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
     volumes:
       - uptime-kuma-data:/app/data                 # volume (stockage persistant) : les données survivent à la recréation
-    # plus de « ports » : Uptime Kuma n'est joignable que via Caddy, sur le réseau Docker privé
+    # plus de « ports » : Uptime Kuma n'est joignable que via Nginx, sur le réseau Docker privé
 
-  caddy:                                           # caddy : le reverse proxy (serveur d'entrée unique, le « portier »)
-    image: caddy:2                                 # image officielle de Caddy, version majeure 2 (épinglée)
+  nginx:                                           # nginx : le reverse proxy (serveur d'entrée unique, le « portier »)
+    image: nginx:1.30                              # image officielle de Nginx, branche stable 1.30 (épinglée)
     restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf arrêt manuel
     ports:
       - "127.0.0.1:8080:80"                        # IP:port_Mac:port_conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
     volumes:
-      - ./proxy/Caddyfile:/etc/caddy/Caddyfile:ro  # bind mount (montage d'un fichier du Mac) ; ro = read-only (lecture seule)
-      - caddy-data:/data                           # data (données) : certificats HTTPS et état de Caddy
-      - caddy-config:/config                       # config : configuration générée par Caddy
+      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro  # bind mount (montage d'un fichier du Mac) ; ro = read-only (lecture seule)
+      # plus de volumes caddy-data et caddy-config : Nginx n'en a pas besoin (HTTPS à l'étape VPS)
     depends_on:                                    # depends_on (dépend de) : l'ordre de démarrage
-      - uptime-kuma                                # démarre Uptime Kuma avant Caddy
+      - uptime-kuma                                # démarre Uptime Kuma avant Nginx
 
 volumes:                                           # volumes : déclaration des volumes nommés (UNE seule clé à la racine)
   uptime-kuma-data:                                # données d'Uptime Kuma (base SQLite)
-  caddy-data:                                      # données de Caddy
-  caddy-config:                                    # configuration de Caddy 
