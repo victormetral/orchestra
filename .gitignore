@@ -1,0 +1,15 @@
+# Secrets: never commit them (only the template is versioned)
+.env
+.env.*
+!.env.example
+
+# macOS system files
+.DS_Store
+
+# Editor settings (personal, not shared)
+.vscode/
+.idea/
+
+# Logs and local backups (backups can contain data)
+*.log
+backups/

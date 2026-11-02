@@ -73,4 +73,4 @@ See [JOURNAL.md](JOURNAL.md) — one line per working session.
 
 ---
 
-Author: **Victor Metral** — Ada Tech School, Lyon
+Author: **Victor Metral** — Ada Tech School, Lyon · License: [MIT](LICENSE)
