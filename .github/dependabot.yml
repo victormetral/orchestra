@@ -1,0 +1,9 @@
+# Dependabot : propositions de mises à jour automatiques (https://docs.github.com/code-security/dependabot)
+version: 2                              # version du format de ce fichier
+updates:                                # updates (mises à jour) : une entrée par écosystème
+  - package-ecosystem: "docker-compose" # lit les images de compose.yaml
+    directory: "/"                      # directory (dossier) : où se trouve compose.yaml
+    schedule:
+      interval: "weekly"                # interval (fréquence) : une vérification par semaine
+    commit-message:
+      prefix: "chore"                   # prefix (préfixe) : messages au format Conventional Commits
