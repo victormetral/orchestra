@@ -1,0 +1,19 @@
+# EditorConfig: the same formatting rules in every editor (https://editorconfig.org)
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown: two trailing spaces mean a line break, so keep them
+[*.md]
+trim_trailing_whitespace = false
+
+# Nginx configuration: 4 spaces per level
+[proxy/*.conf]
+indent_size = 4

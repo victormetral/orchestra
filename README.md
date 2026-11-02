@@ -18,6 +18,7 @@ It grows with my learning path (Ada Tech School — DevOps / Operations & Securi
 | Stage | Where | Goal | Status |
 |---|---|---|---|
 | 1 | **Local** (macOS, Docker Desktop) | Build and test the stack safely, at no cost | 🔵 In progress |
+| — | **Linux lab** (Debian 13 VM in UTM, reached over SSH) | Rehearse server administration before the VPS | ✅ Ready |
 | 2 | **VPS** (rented Linux server) | Real domain, HTTPS, SSH, server hardening | ⏳ Planned |
 | 3 | **AWS** | Infrastructure as Code with Terraform, budget alerts | ⏳ Planned |
 
@@ -25,7 +26,7 @@ It grows with my learning path (Ada Tech School — DevOps / Operations & Securi
 
 | Phase | Topic | Main tools |
 |---|---|---|
-| 1 | Containers | Docker, Docker Compose, reverse proxy |
+| 1 | Containers | Docker, Docker Compose, Nginx reverse proxy |
 | 2 | CI/CD | GitHub Actions |
 | 3 | Observability | Uptime Kuma, Prometheus, Grafana |
 | 4 | DevSecOps | Trivy, secrets management, signed images |
@@ -37,14 +38,28 @@ It grows with my learning path (Ada Tech School — DevOps / Operations & Securi
 
 | Service | Role | Status |
 |---|---|---|
-| Uptime Kuma | Availability monitoring and alerts — monitoring comes before applications | ⏳ Next |
+| Nginx | Reverse proxy: the single entry point, forwards requests to each service | ✅ Running locally |
+| Uptime Kuma | Availability monitoring and alerts — monitoring comes before applications | ✅ Running locally (behind Nginx) |
 | Conservatoire polyglotte | My multi-language application | ⏳ Planned |
+
+## Quick start
+
+Requirements: Docker with Docker Compose.
+
+```bash
+git clone https://github.com/victormetral/orchestra.git
+cd orchestra
+docker compose up -d
+```
+
+Then open http://localhost:8080. Only Nginx is published, and only on `127.0.0.1`: Uptime Kuma is reachable through the reverse proxy, never directly.
 
 ## Decisions
 
 Every important technical choice is recorded as an **Architecture Decision Record (ADR)**:
 
 - [ADR-0001 — Name, scope and first service](docs/adr/0001-name-scope-first-service.md)
+- [ADR-0002 — Reverse proxy: Nginx](docs/adr/0002-reverse-proxy-nginx.md)
 
 ## Progress log
 
@@ -53,9 +68,9 @@ See [JOURNAL.md](JOURNAL.md) — one line per working session.
 ## Working rules
 
 - Small steps: about **30 minutes a day**, one brick per session.
-- Everything is **versioned and documented**: one branch per session, one commit per finished block, one pull request per session.
+- Everything is **versioned and documented**: one branch per work block, a commit and a push every day, one pull request per finished block.
 - **Security first**: no secrets in Git, no disabled TLS checks, least privilege.
 
 ---
 
-Author: **Victor Metral** — Ada Tech School, Lyon
+Author: **Victor Metral** — Ada Tech School, Lyon · License: [MIT](LICENSE)

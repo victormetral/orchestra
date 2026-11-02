@@ -1,11 +1,21 @@
-   services:                               # services : les conteneurs du projet
-     uptime-kuma:                          # nom du service (et nom DNS sur le réseau Docker)
-       image: louislam/uptime-kuma:2       # image officielle, version majeure 2 (épinglée, jamais « latest »)
-       restart: unless-stopped             # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
-       ports:
-         - "127.0.0.1:3001:3001"           # Mac:conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
-       volumes:
-         - uptime-kuma-data:/app/data      # volume (stockage persistant) : les données survivent à la recréation
+services:                                          # services : les conteneurs du projet
+  uptime-kuma:                                     # nom du service (et nom DNS sur le réseau Docker)
+    image: louislam/uptime-kuma:2                  # image officielle, version majeure 2 (épinglée, jamais « latest »)
+    restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf si tu l'arrêtes toi-même
+    volumes:
+      - uptime-kuma-data:/app/data                 # volume (stockage persistant) : les données survivent à la recréation
+    # plus de « ports » : Uptime Kuma n'est joignable que via Nginx, sur le réseau Docker privé
 
-   volumes:
-     uptime-kuma-data:                     # déclaration du volume nommé
+  nginx:                                           # nginx : le reverse proxy (serveur d'entrée unique, le « portier »)
+    image: nginx:1.30                              # image officielle de Nginx, branche stable 1.30 (épinglée)
+    restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf arrêt manuel
+    ports:
+      - "127.0.0.1:8080:80"                        # IP:port_Mac:port_conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro  # bind mount (montage d'un fichier du Mac) ; ro = read-only (lecture seule)
+      # plus de volumes caddy-data et caddy-config : Nginx n'en a pas besoin (HTTPS à l'étape VPS)
+    depends_on:                                    # depends_on (dépend de) : l'ordre de démarrage
+      - uptime-kuma                                # démarre Uptime Kuma avant Nginx
+
+volumes:                                           # volumes : déclaration des volumes nommés (UNE seule clé à la racine)
+  uptime-kuma-data:                                # données d'Uptime Kuma (base SQLite)
