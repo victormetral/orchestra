@@ -7,7 +7,7 @@ services:                                          # services : les conteneurs d
     # plus de « ports » : Uptime Kuma n'est joignable que via Nginx, sur le réseau Docker privé
 
   nginx:                                           # nginx : le reverse proxy (serveur d'entrée unique, le « portier »)
-    image: nginx:1.30                              # image officielle de Nginx, branche stable 1.30 (épinglée)
+    image: nginx:1.31                              # image officielle de Nginx, branche stable 1.30 (épinglée)
     restart: unless-stopped                        # restart (redémarrer) automatiquement, sauf arrêt manuel
     ports:
       - "127.0.0.1:8080:80"                        # IP:port_Mac:port_conteneur — exposé SEULEMENT sur ton Mac (souviens-toi du défi 4)
