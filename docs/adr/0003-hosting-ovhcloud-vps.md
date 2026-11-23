@@ -5,13 +5,13 @@
 
 ## Context
 
-orchestra must leave my Mac: a real domain, HTTPS and SSH need a server reachable from the Internet.
+Orchestra must leave my Mac: a real domain, HTTPS and SSH need a server reachable from the Internet.
 It will also host FinancePilot, my CDA project: my mentor asked for a real server instead of a platform like Railway.
 The budget is small, the data should stay in the European Union, and AWS stays planned for phase 5 (Terraform).
 
 ## Options
 
-| Option | Price | Data location | Fit for orchestra |
+| Option | Price | Data location | Fit for Orchestra |
 |---|---|---|---|
 | **OVHcloud VPS-1 (2027 range)** | from €3.81 excl. VAT/month (12 months), €4.49 without commitment | France (Gravelines) | Full Linux server, fixed price |
 | **AWS Lightsail 4 GB** | $24/month | Region of choice, US company (CLOUD Act) | Same work, about 5× the price |
@@ -33,5 +33,5 @@ AWS Lightsail is rejected because it costs about five times more for the same wo
 
 - Positive: a real Linux server to operate, in France, for about €5.40 a month (incl. VAT).
 - Negative: I am responsible for its security (SSH, firewall, updates, backups).
-- Next: ADR-0004 (orchestra hosts FinancePilot, deploy user), then domain name and HTTPS.
+- Next: ADR-0004 (Orchestra hosts FinancePilot, deploy user), then domain name and HTTPS.
 - Later: consider the 12-month commitment once real usage is measured.

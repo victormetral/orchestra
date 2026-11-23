@@ -1,4 +1,4 @@
-# 🎼 orchestra
+# 🎼 Orchestra
 
 **My personal production platform** — a small cloud I build, run and secure myself, step by step, to host and monitor my own applications.
 
@@ -9,7 +9,7 @@
 ## Why this project
 
 My other projects show that I can **build** applications.
-`orchestra` shows that I can **run them in production**: deploy them automatically, monitor them, secure them, and recover when something breaks.
+Orchestra shows that I can **run them in production**: deploy them automatically, monitor them, secure them, and recover when something breaks.
 
 It grows with my learning path (Ada Tech School — DevOps / Operations & Security specialisation), one small, documented step at a time.
 

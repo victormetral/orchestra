@@ -5,13 +5,13 @@
 
 ## Context
 
-orchestra will host several services, but only one entry point should be exposed.
+Orchestra will host several services, but only one entry point should be exposed.
 A reverse proxy receives every request and forwards it to the right service on the private Docker network.
-It must also handle HTTPS automatically when orchestra moves to a VPS.
+It must also handle HTTPS automatically when Orchestra moves to a VPS.
 
 ## Options
 
-| Option | HTTPS | Configuration | Fit for orchestra |
+| Option | HTTPS | Configuration | Fit for Orchestra |
 |---|---|---|---|
 | **Caddy** | Automatic (Let's Encrypt built in) | Short `Caddyfile` | Simple, but rare in companies |
 | **Traefik** | Automatic (ACME built in) | Docker labels on each service | Powerful, but more concepts to learn |
