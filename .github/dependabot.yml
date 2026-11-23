@@ -7,3 +7,6 @@ updates:                                # updates (mises à jour) : une entrée 
       interval: "weekly"                # interval (fréquence) : une vérification par semaine
     commit-message:
       prefix: "chore"                   # prefix (préfixe) : messages au format Conventional Commits
+    ignore:                             # ignore (ignorer) : mises à jour à ne pas proposer
+      - dependency-name: "nginx"        # nginx : les versions mineures impaires (1.31, 1.33…) sont la branche mainline (développement)
+        update-types: ["version-update:semver-minor"]  # on reste sur la branche stable ; passage à la stable suivante à la revue trimestrielle
